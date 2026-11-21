@@ -1,0 +1,23 @@
+[package]
+name = "synapse-mesh-core"
+version = "0.1.0"
+edition = "2021"
+description = "SYNAPSE-MESH : moteur vectoriel HNSW + SIMD + Product Quantization, no_std, WebAssembly pur (ABI C, sans wasm-bindgen)."
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Bibliotheque mathematique pure Rust, no_std : `core` seul n'expose pas
+# sqrt/ln (ce sont des routines logicielles, pas de simples manipulations
+# de bits), et wasm-bindgen est deliberement exclu (voir lib.rs) donc
+# `std` n'est jamais lie dans ce crate.
+libm = { version = "0.2", default-features = false }
+
+[profile.release]
+opt-level = 3
+lto = true
+panic = "abort"
+codegen-units = 1
+strip = true
