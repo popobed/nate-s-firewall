@@ -1,0 +1,22 @@
+﻿name: C11 Core Build & Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build essentials
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Verify C11 syntax and compilation
+        run: |
+          gcc --version
+          find src -name "*.c" -exec gcc -std=c11 -O2 -Wall -Wextra -Iinclude -fsyntax-only {} +
