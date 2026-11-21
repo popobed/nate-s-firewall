@@ -2,3 +2,5 @@
 *.o
 *.obj
 .DS_Store
+
+*.bin
